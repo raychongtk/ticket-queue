@@ -1,0 +1,27 @@
+extend header
+
+block script
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js')
+    script(src='https://code.jquery.com/jquery-1.11.1.js')
+
+block content
+    main
+        .container.mt-3
+            .row#ticket
+                each ticket in tickets
+                    .col-sm-3.mb-3
+                        .card
+                            .card-body.text-center
+                                h5.card-title #{ticket.ticketID}
+                                button.btn.btn-primary(type='button' id=ticket.ticketID onclick='releaseTicket(this.id)' disabled=ticket.ticketStatus) Notify
+
+        script.
+            var socket = io.connect('http://192.168.0.108:8080/');
+            socket.on('updateAdminLayout', function(html) {
+                $('#ticket').append(html);
+            })
+            function releaseTicket(id, btn) {
+                socket.emit('releaseTicket', id)
+                $('#'+id).attr("disabled", true);
+            }
+           

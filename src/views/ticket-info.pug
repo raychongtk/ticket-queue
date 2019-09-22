@@ -1,0 +1,21 @@
+extend header
+
+block script
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js')
+    script(src='https://code.jquery.com/jquery-1.11.1.js')
+
+block content
+    .jumbotron.jumbotron-fluid
+        .container
+            h1.display-4#ticket #{ticketNumber}
+            p.lead#message This is your current ticket. We will notify you once your ticket is available.
+
+    script.
+        var socket = io.connect('http://192.168.0.108:8080/');
+        var ticketID = $('#ticket').text();
+
+        socket.on('ticket', function(id) {
+            if (id === ticketID) {
+                $('#message').text('You ticket is now available.')
+            }
+        })

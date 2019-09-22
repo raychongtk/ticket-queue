@@ -1,0 +1,34 @@
+extend header
+
+block script
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js')
+    script(src='https://code.jquery.com/jquery-1.11.1.js')
+
+block content
+    main
+        .container.mt-3
+            .row
+                .mx-auto.d-block
+                    img(src=dataURL)
+                    br
+            .text-center.mb-3 Scan me to get your ticket
+            .row#ticket
+                each ticket in tickets
+                    .col-sm-3.mb-3
+                        .card(id=ticket.ticketID)
+                            .card-body.text-center
+                                h5.card-title #{ticket.ticketID}
+                                p.card-text= ticket.ticketStatus ? 'Available' : 'Waiting'
+
+        script.
+            var socket = io.connect('http://192.168.0.108:8080/');
+            socket.on('updateLayout', function(html) {
+                $('#ticket').append(html);
+            })
+            
+            socket.on('ticket', function(id) {
+                console.log('test')
+                console.log(id)
+                $('#'+id).find('p').text('Available');
+            })
+           
