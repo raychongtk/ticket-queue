@@ -1,4 +1,4 @@
-extend header
+extends header
 
 block script
     script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js')
@@ -20,15 +20,15 @@ block content
                                 h5.card-title #{ticket.ticketID}
                                 p.card-text= ticket.ticketStatus ? 'Available' : 'Waiting'
 
-        script.
-            var socket = io.connect('http://192.168.0.108:8080/');
-            socket.on('updateLayout', function(html) {
-                $('#ticket').append(html);
-            })
-            
-            socket.on('ticket', function(id) {
-                console.log('test')
-                console.log(id)
-                $('#'+id).find('p').text('Available');
-            })
+    script.
+        var socket = io.connect('http://192.168.0.108:8080/');
+        socket.on('updateLayout', function(html) {
+            $('#ticket').append(html);
+        })
+        
+        socket.on('ticket', function(id) {
+            console.log('test')
+            console.log(id)
+            $('#'+id).find('p').text('Available');
+        })
            

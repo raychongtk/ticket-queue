@@ -1,4 +1,4 @@
-extend header
+extends header
 
 block script
     script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js')
@@ -15,13 +15,13 @@ block content
                                 h5.card-title #{ticket.ticketID}
                                 button.btn.btn-primary(type='button' id=ticket.ticketID onclick='releaseTicket(this.id)' disabled=ticket.ticketStatus) Notify
 
-        script.
-            var socket = io.connect('http://192.168.0.108:8080/');
-            socket.on('updateAdminLayout', function(html) {
-                $('#ticket').append(html);
-            })
-            function releaseTicket(id, btn) {
-                socket.emit('releaseTicket', id)
-                $('#'+id).attr("disabled", true);
-            }
+    script.
+        var socket = io.connect('http://192.168.0.108:8080/');
+        socket.on('updateAdminLayout', function(html) {
+            $('#ticket').append(html);
+        })
+        function releaseTicket(id, btn) {
+            socket.emit('releaseTicket', id)
+            $('#'+id).attr("disabled", true);
+        }
            
