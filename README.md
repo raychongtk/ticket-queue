@@ -1,5 +1,5 @@
-# TicketQueue
-A simple ticket queue system
+# Ticket Queue
+A simple ticket queue for learning web socket
 
 # Setup the project
 ```
